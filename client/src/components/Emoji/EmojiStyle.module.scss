@@ -1,0 +1,26 @@
+
+.emojiBtn {
+  background-color: transparent;
+  border          : none;
+  margin-left     : -72px;
+  margin-bottom   : 2px;
+
+  &__icon {
+    font-size: 22px;
+  }
+}
+
+aside.emoji-picker-react {
+  position: absolute;
+  right   : 42px;
+  bottom  : 55px;
+
+  @media (min-width: $xl) {
+    right : 160px;
+    bottom: 69px;
+  }
+  @media (min-width: $xxl) {
+    right : 260px;
+  }
+
+}

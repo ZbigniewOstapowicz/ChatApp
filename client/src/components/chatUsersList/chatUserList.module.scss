@@ -1,0 +1,81 @@
+.chatUsers-wrapper {
+  overflow-x      : scroll;
+  overflow-y      : scroll;
+  height          : 92px;
+  width           : 100vw;
+  box-shadow      : rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  background-color: $bg-color2;
+  border-radius   : 7px;
+
+  &__list {
+    list-style: none;
+    margin    : 5px 10px 0 10px;
+    display   : flex;
+
+    &-user {
+      padding: 5px 10px 5px 10px;
+      width  : 100px;
+
+      &-icon {
+        border-radius: 50%;
+        text-align   : center;
+        padding      : 5px;
+        color        : white;
+        width        : 30px;
+        height       : 30px;
+        margin       : 0 auto;
+      }
+
+      &-name {
+        text-align   : center;
+        padding      : 5px 10px;
+        margin-top   : 2px;
+        border-radius: 12px;
+        word-wrap    : break-word;
+        align-self: center;
+      }
+
+    }
+
+  }
+
+  @media (min-width: $sm) {
+    height   : 100vh;
+    min-width: 150px;
+    width    : 200px;
+    border-radius: 0;
+
+    &__list {
+      flex-direction: column;
+      width         : auto;
+
+      &-user {
+        display: flex;
+
+        &-icon {
+          margin      : 0;
+          margin-right: 5px;
+          min-width   : 30px;
+        }
+
+      }
+
+    }
+
+  }
+
+  @media (min-width: $lg) {
+    width    : 200px;
+    min-width: 200px;
+  }
+
+  @media (min-width: $xl) {
+    width    : 250px;
+    min-width: 250px;
+  }
+
+  @media (min-width: $xxl){
+    width    : 300px;
+    min-width: 300px;
+  }
+}

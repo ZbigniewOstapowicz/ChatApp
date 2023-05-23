@@ -1,0 +1,48 @@
+.loginSection {
+  width           : 100%;
+  height          : 100vh;
+  max-width       : 1920px;
+  margin          : 0 auto;
+  padding-top     : 100px;
+  background-color: $bg-color;
+
+  &__form {
+    display         : flex;
+    flex-direction  : column;
+    border-radius   : 10px;
+    padding         : 5px;
+    background-color: $primal-color;
+    width           : 300px;
+    height          : 150px;
+    margin          : 0 auto;
+
+    @media(min-width: $sm) {
+      width: 400px;
+    }
+  }
+
+  &__label {
+    text-align: center;
+    padding   : 10px 0;
+  }
+
+  &__input {
+    height       : 30px;
+    border-radius: 10px;
+  }
+
+  &__button {
+    border-radius: 10px;
+    width        : 100px;
+    height       : 30px;
+    margin       : 10px auto;
+  }
+
+
+  &__error {
+    margin    : 0 auto;
+    color     : crimson;
+    text-align: center;
+  }
+
+}
