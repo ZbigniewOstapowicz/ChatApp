@@ -19,7 +19,7 @@ exports.addMessage = async (user, msg, timeStamp) => {
   }
 };
 
-const filteringConditions = async (req, skip, socket, PAGE_SIZE) => {
+const filteringConditions = async (req, page, socket, PAGE_SIZE) => {
   // const messagesLength = await db.countDocuments(req);
   // const newSkip = messagesLength - (skip + PAGE_SIZE);
   // console.log(messagesLength, skip, newSkip)
@@ -67,16 +67,16 @@ const filteringConditions = async (req, skip, socket, PAGE_SIZE) => {
   //   return;
   // }
   result = await db.find(req)
-    .sort({ timeStamp: -1 })
+    .sort({timeStamp:-1})
     .skip((page - 1) * PAGE_SIZE)
     .limit(PAGE_SIZE)
     .exec();
+// console.log(result.reverse());
 
-
-  io.to(socket).emit('get messages list', result);
+  io.to(socket).emit('get messages list', result.reverse());
 }
 
-exports.getAllMessages = async (skip, socket) => {
+exports.getAllMessages = async (page, socket) => {
   try {
 
     // const messagesLenght = await db.countDocuments({});
@@ -100,7 +100,7 @@ exports.getAllMessages = async (skip, socket) => {
     //     return;
     //   }
     // }
-    filteringConditions(req = null, skip, socket, PAGE_SIZE);
+    filteringConditions(req = null, page, socket, PAGE_SIZE);
 
   }
   catch (e) {
@@ -108,7 +108,7 @@ exports.getAllMessages = async (skip, socket) => {
   }
 };
 
-exports.filterByName = async (name, skip, socket) => {
+exports.filterByName = async (name, page, socket) => {
   try {
     // const messagesLenght = await db.countDocuments({ 'user.name': name })
     // let newSkip = messagesLenght - (skip + PAGE_SIZE)
@@ -132,24 +132,24 @@ exports.filterByName = async (name, skip, socket) => {
     //   }
     // }
     const req = { 'user.name': name };
-    filteringConditions(req, skip, socket, PAGE_SIZE)
+    filteringConditions(req, page, socket, PAGE_SIZE)
   }
   catch (err) {
     console.log(err)
   }
 };
 
-exports.filterByText = async (text, skip, socket) => {
+exports.filterByText = async (text, page, socket) => {
   try {
     const req = { 'msg': { $regex: new RegExp(text, 'i') } }
-    filteringConditions(req, skip, socket, PAGE_SIZE)
+    filteringConditions(req, page, socket, PAGE_SIZE)
   }
   catch (err) {
     console.log(err)
   }
 };
 
-exports.filterByDate = async (date, skip, socket) => {
+exports.filterByDate = async (date, page, socket) => {
   try {
     if (date.from && date.to) {
       // const result = await db.find({
@@ -168,7 +168,7 @@ exports.filterByDate = async (date, skip, socket) => {
           $lt: new Date(date.to).toISOString()
         }
       };
-      filteringConditions(req, skip, socket, PAGE_SIZE)
+      filteringConditions(req, page, socket, PAGE_SIZE)
     }
     else if (date.from && !date.to) {
       // const result = await db.find({
@@ -181,7 +181,7 @@ exports.filterByDate = async (date, skip, socket) => {
         'timeStamp':
           { $gte: new Date(date.from).toISOString(), }
       }
-      filteringConditions(req, skip, socket, PAGE_SIZE)
+      filteringConditions(req, page, socket, PAGE_SIZE)
 
     }
     else if (date.to && !date.from) {
@@ -198,7 +198,7 @@ exports.filterByDate = async (date, skip, socket) => {
           $lt: new Date(date.to).toISOString()
         }
       }
-      filteringConditions(req, skip, socket, PAGE_SIZE)
+      filteringConditions(req, page, socket, PAGE_SIZE)
 
     }
   }
