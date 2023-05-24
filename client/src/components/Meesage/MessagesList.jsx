@@ -19,7 +19,7 @@ const MeesagesList = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    socket.emit('get messages list', 0);
+    socket.emit('get messages list', page);
 
     socket.on('get messages list', messages => {
       if (messages) {
@@ -45,60 +45,78 @@ const MeesagesList = ({ currentUser }) => {
     });
   }, []);
 
-  useEffect(() => {
-    switch (true) {
-      case (page > 1 && !filterMessages.filterBy): {
-        setIsLoading(true);
-        socket.emit('get messages list', skip);
-        break
-      }
-      case (page > 1 && filterMessages.filterBy === 'filterByName'): {
-        if (chatMessages.length < 20) return;
-        else {
-          setIsLoading(true);
-          socket.emit('filter meesages by name', filterMessages.filterData, skip);
-        }
-        break;
-      }
-      case (page > 1 && filterMessages.filterBy === 'filterByText'): {
-        if (chatMessages.length < 20) return;
-        else {
-          setIsLoading(true);
-          socket.emit('filter meesages by text', filterMessages.filterData, skip);
-        }
-        break;
-      }
-      case (page > 1 && filterMessages.filterBy === 'filterByDate'): {
-        if (chatMessages.length < 20) return;
-        else {
-          setIsLoading(true);
-          socket.emit('filter meesages by date', filterMessages.filterData, skip);
-        }
-        break;
-      }
-    }
+  // useEffect(() => {
+    // switch (true) {
+      // case (page > 1 && !filterMessages.filterBy): {
+        // setIsLoading(true);
+        // socket.emit('get messages list', page);
+        // break
+      // }
+      // case (page > 1 && filterMessages.filterBy === 'filterByName'): {
+        // if (chatMessages.length < 20) return;
+        // else {
+          // setIsLoading(true);
+          // socket.emit('filter meesages by name', filterMessages.filterData, skip);
+        // }
+        // break;
+      // }
+      // case (page > 1 && filterMessages.filterBy === 'filterByText'): {
+        // if (chatMessages.length < 20) return;
+        // else {
+          // setIsLoading(true);
+          // socket.emit('filter meesages by text', filterMessages.filterData, skip);
+        // }
+        // break;
+      // }
+      // case (page > 1 && filterMessages.filterBy === 'filterByDate'): {
+        // if (chatMessages.length < 20) return;
+        // else {
+          // setIsLoading(true);
+          // socket.emit('filter meesages by date', filterMessages.filterData, skip);
+        // }
+        // break;
+      // }
+    // }
 
-  }, [page]);
+  // }, [page]);
 
   useEffect(() => {
     switch (filterMessages.filterBy) {
       case 'reset':
         setFilterMessages({ filterBy: '', filterData: null });
         chatMessagesDefaultValue();
-        socket.emit('get messages list', 0);
+        socket.emit('get messages list', page);
         break;
       case 'filterByName':
-        chatMessagesDefaultValue();
-        socket.emit('filter meesages by name', filterMessages.filterData, 0);
-        break;
+        if (page < 1) {
+          chatMessagesDefaultValue();
+          socket.emit('filter meesages by name', filterMessages.filterData, page);
+          break;
+        }
+        else {
+          socket.emit('filter meesages by name', filterMessages.filterData, page);
+          break
+        }
       case 'filterByText':
-        chatMessagesDefaultValue();
-        socket.emit('filter meesages by text', filterMessages.filterData, 0);
-        break;
+        if (page < 1) {
+          chatMessagesDefaultValue();
+          socket.emit('filter meesages by text', filterMessages.filterData, page);
+          break;
+        }
+        else {
+          socket.emit('filter meesages by text', filterMessages.filterData, page);
+          break
+        }
       case 'filterByDate':
-        chatMessagesDefaultValue();
-        socket.emit('filter meesages by date', filterMessages.filterData, 0);
-        break;
+        if (page < 1) {
+          chatMessagesDefaultValue();
+          socket.emit('filter meesages by date', filterMessages.filterData, page);
+          break;
+        }
+        else {
+          socket.emit('filter meesages by date', filterMessages.filterData, page);
+          break
+        }
     }
 
   }, [filterMessages]);
