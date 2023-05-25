@@ -11,7 +11,7 @@ const style = bemCssModule(MessagesList);
 const MeesagesList = ({ currentUser }) => {
   const messagesRef = useRef();
   const audio = new Audio(sound);
-  const [writeingMsg, setWriteingMsg] = useState('');
+  const [writingMsg, setWritingMsg] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
   const [page, setPage] = useState(1);
   const [skip, setSkip] = useState(0);
@@ -34,9 +34,9 @@ const MeesagesList = ({ currentUser }) => {
     });
 
     socket.on('user writeing', msg => {
-      setWriteingMsg(msg);
+      setWritingMsg(msg);
       setTimeout(() => {
-        setWriteingMsg('');
+        setWritingMsg('');
       }, 1500);
     });
 
@@ -268,7 +268,7 @@ const MeesagesList = ({ currentUser }) => {
         <ul className={style('list')}>
           {isLoading ? <li>Loading</li> : null}
           {listElement}
-          {writeingMsg ? <li>{writeingMsg}</li> : <li></li>}
+          {writingMsg ? <li>{writingMsg}</li> : <li></li>}
         </ul>
       </div>
       <ChatMeesageForm
