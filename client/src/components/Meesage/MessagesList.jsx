@@ -51,37 +51,37 @@ const MeesagesList = ({ currentUser }) => {
   //     setIsLoading(true);
   //     socket.emit('get messages list', page);
   //   }
-    
-    // switch (true) {
-    //     setIsLoading(true);
-    //     socket.emit('get messages list', page);
-    //     break
-    //   }
-    //   case (page > 1 && filterMessages.filterBy === 'filterByName'): {
-    //     if (chatMessages.length < 20) return;
-    //     else {
-    //       setIsLoading(true);
-    //       socket.emit('filter meesages by name', filterMessages.filterData, skip);
-    //     }
-    //     break;
-    //   }
-    //   case (page > 1 && filterMessages.filterBy === 'filterByText'): {
-    //     if (chatMessages.length < 20) return;
-    //     else {
-    //       setIsLoading(true);
-    //       socket.emit('filter meesages by text', filterMessages.filterData, skip);
-    //     }
-    //     break;
-    //   }
-    //   case (page > 1 && filterMessages.filterBy === 'filterByDate'): {
-    //     if (chatMessages.length < 20) return;
-    //     else {
-    //       setIsLoading(true);
-    //       socket.emit('filter meesages by date', filterMessages.filterData, skip);
-    //     }
-    //     break;
-    //   }
-    // }
+
+  // switch (true) {
+  //     setIsLoading(true);
+  //     socket.emit('get messages list', page);
+  //     break
+  //   }
+  //   case (page > 1 && filterMessages.filterBy === 'filterByName'): {
+  //     if (chatMessages.length < 20) return;
+  //     else {
+  //       setIsLoading(true);
+  //       socket.emit('filter meesages by name', filterMessages.filterData, skip);
+  //     }
+  //     break;
+  //   }
+  //   case (page > 1 && filterMessages.filterBy === 'filterByText'): {
+  //     if (chatMessages.length < 20) return;
+  //     else {
+  //       setIsLoading(true);
+  //       socket.emit('filter meesages by text', filterMessages.filterData, skip);
+  //     }
+  //     break;
+  //   }
+  //   case (page > 1 && filterMessages.filterBy === 'filterByDate'): {
+  //     if (chatMessages.length < 20) return;
+  //     else {
+  //       setIsLoading(true);
+  //       socket.emit('filter meesages by date', filterMessages.filterData, skip);
+  //     }
+  //     break;
+  //   }
+  // }
 
   // }, [page]);
 
