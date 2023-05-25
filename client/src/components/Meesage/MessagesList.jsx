@@ -45,47 +45,53 @@ const MeesagesList = ({ currentUser }) => {
     });
   }, []);
 
-  // useEffect(() => {
+  useEffect(() => {
+    console.log(filterMessages.filterBy);
+    if(page > 1 && !filterMessages.filterBy){
+      setIsLoading(true);
+      socket.emit('get messages list', page);
+    }
+    
     // switch (true) {
-      // case (page > 1 && !filterMessages.filterBy): {
-        // setIsLoading(true);
-        // socket.emit('get messages list', page);
-        // break
-      // }
-      // case (page > 1 && filterMessages.filterBy === 'filterByName'): {
-        // if (chatMessages.length < 20) return;
-        // else {
-          // setIsLoading(true);
-          // socket.emit('filter meesages by name', filterMessages.filterData, skip);
-        // }
-        // break;
-      // }
-      // case (page > 1 && filterMessages.filterBy === 'filterByText'): {
-        // if (chatMessages.length < 20) return;
-        // else {
-          // setIsLoading(true);
-          // socket.emit('filter meesages by text', filterMessages.filterData, skip);
-        // }
-        // break;
-      // }
-      // case (page > 1 && filterMessages.filterBy === 'filterByDate'): {
-        // if (chatMessages.length < 20) return;
-        // else {
-          // setIsLoading(true);
-          // socket.emit('filter meesages by date', filterMessages.filterData, skip);
-        // }
-        // break;
-      // }
+    //     setIsLoading(true);
+    //     socket.emit('get messages list', page);
+    //     break
+    //   }
+    //   case (page > 1 && filterMessages.filterBy === 'filterByName'): {
+    //     if (chatMessages.length < 20) return;
+    //     else {
+    //       setIsLoading(true);
+    //       socket.emit('filter meesages by name', filterMessages.filterData, skip);
+    //     }
+    //     break;
+    //   }
+    //   case (page > 1 && filterMessages.filterBy === 'filterByText'): {
+    //     if (chatMessages.length < 20) return;
+    //     else {
+    //       setIsLoading(true);
+    //       socket.emit('filter meesages by text', filterMessages.filterData, skip);
+    //     }
+    //     break;
+    //   }
+    //   case (page > 1 && filterMessages.filterBy === 'filterByDate'): {
+    //     if (chatMessages.length < 20) return;
+    //     else {
+    //       setIsLoading(true);
+    //       socket.emit('filter meesages by date', filterMessages.filterData, skip);
+    //     }
+    //     break;
+    //   }
     // }
 
-  // }, [page]);
+  }, [page]);
 
   useEffect(() => {
     switch (filterMessages.filterBy) {
       case 'reset':
-        setFilterMessages({ filterBy: '', filterData: null });
         chatMessagesDefaultValue();
-        socket.emit('get messages list', page);
+        // setFilterMessages({ filterBy: '', filterData: null });
+        socket.emit('get messages list', 1);
+        console.log(filterMessages.filterBy);
         break;
       case 'filterByName':
         if (page < 1) {
@@ -129,8 +135,8 @@ const MeesagesList = ({ currentUser }) => {
 
   const chatMessagesDefaultValue = () => {
     setChatMessages([]);
-    setSkip(0);
     setPage(1);
+    setSkip(0);
   }
 
   const scrollToBottom = () => {

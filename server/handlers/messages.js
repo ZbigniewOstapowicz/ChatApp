@@ -71,7 +71,7 @@ const filteringConditions = async (req, page, socket, PAGE_SIZE) => {
     .skip((page - 1) * PAGE_SIZE)
     .limit(PAGE_SIZE)
     .exec();
-// console.log(result.reverse());
+console.log(page, result);
 
   io.to(socket).emit('get messages list', result.reverse());
 }
