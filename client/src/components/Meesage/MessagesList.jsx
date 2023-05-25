@@ -4,7 +4,6 @@ import useGetMessages from "../../hooks/useGetMessages";
 import bemCssModule from "bem-css-modules";
 import sound from "../../../audio/messageSound.ogg";
 import socket from "../../helpers/socketConfig";
-
 import ChatMeesageForm from "../ChatMeesageForm/ChatMeesageForm";
 
 import { default as MessagesList } from "./MessagesListStyle.module.scss";
