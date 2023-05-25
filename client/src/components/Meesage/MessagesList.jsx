@@ -45,12 +45,12 @@ const MeesagesList = ({ currentUser }) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(filterMessages.filterBy);
-    if(page > 1 && !filterMessages.filterBy){
-      setIsLoading(true);
-      socket.emit('get messages list', page);
-    }
+  // useEffect(() => {
+  //   console.log(filterMessages.filterBy);
+  //   if(page > 1 && !filterMessages.filterBy){
+  //     setIsLoading(true);
+  //     socket.emit('get messages list', page);
+  //   }
     
     // switch (true) {
     //     setIsLoading(true);
@@ -83,49 +83,108 @@ const MeesagesList = ({ currentUser }) => {
     //   }
     // }
 
+  // }, [page]);
+
+  // useEffect(() => {
+  //   switch (filterMessages.filterBy) {
+  //     case 'reset':
+  //       chatMessagesDefaultValue();
+  //       // setFilterMessages({ filterBy: '', filterData: null });
+  //       socket.emit('get messages list', 1);
+  //       console.log(filterMessages.filterBy);
+  //       break;
+  //     case 'filterByName':
+  //       if (page < 1) {
+  //         chatMessagesDefaultValue();
+  //         socket.emit('filter meesages by name', filterMessages.filterData, page);
+  //         break;
+  //       }
+  //       else {
+  //         socket.emit('filter meesages by name', filterMessages.filterData, page);
+  //         break
+  //       }
+  //     case 'filterByText':
+  //       if (page < 1) {
+  //         chatMessagesDefaultValue();
+  //         socket.emit('filter meesages by text', filterMessages.filterData, page);
+  //         break;
+  //       }
+  //       else {
+  //         socket.emit('filter meesages by text', filterMessages.filterData, page);
+  //         break
+  //       }
+  //     case 'filterByDate':
+  //       if (page < 1) {
+  //         chatMessagesDefaultValue();
+  //         socket.emit('filter meesages by date', filterMessages.filterData, page);
+  //         break;
+  //       }
+  //       else {
+  //         socket.emit('filter meesages by date', filterMessages.filterData, page);
+  //         break
+  //       }
+  //   }
+
+  // }, [filterMessages]);
+
+
+  useEffect(() => {
+    switch (true) {
+      case (page > 1 && !filterMessages.filterBy): {
+        setIsLoading(true);
+        socket.emit('get messages list', page);
+        break
+      }
+      case (page > 1 && filterMessages.filterBy === 'filterByName'): {
+        if (chatMessages.length < 20) return;
+        else {
+          setIsLoading(true);
+          socket.emit('filter meesages by name', filterMessages.filterData, page);
+        }
+        break;
+      }
+      case (page > 1 && filterMessages.filterBy === 'filterByText'): {
+        if (chatMessages.length < 20) return;
+        else {
+          setIsLoading(true);
+          socket.emit('filter meesages by text', filterMessages.filterData, page);
+        }
+        break;
+      }
+      case (page > 1 && filterMessages.filterBy === 'filterByDate'): {
+        if (chatMessages.length < 20) return;
+        else {
+          setIsLoading(true);
+          socket.emit('filter meesages by date', filterMessages.filterData, page);
+        }
+        break;
+      }
+    }
+
   }, [page]);
 
   useEffect(() => {
     switch (filterMessages.filterBy) {
       case 'reset':
+        setFilterMessages({ filterBy: '', filterData: null });
         chatMessagesDefaultValue();
-        // setFilterMessages({ filterBy: '', filterData: null });
         socket.emit('get messages list', 1);
-        console.log(filterMessages.filterBy);
         break;
       case 'filterByName':
-        if (page < 1) {
-          chatMessagesDefaultValue();
-          socket.emit('filter meesages by name', filterMessages.filterData, page);
-          break;
-        }
-        else {
-          socket.emit('filter meesages by name', filterMessages.filterData, page);
-          break
-        }
+        chatMessagesDefaultValue();
+        socket.emit('filter meesages by name', filterMessages.filterData, 1);
+        break;
       case 'filterByText':
-        if (page < 1) {
-          chatMessagesDefaultValue();
-          socket.emit('filter meesages by text', filterMessages.filterData, page);
-          break;
-        }
-        else {
-          socket.emit('filter meesages by text', filterMessages.filterData, page);
-          break
-        }
+        chatMessagesDefaultValue();
+        socket.emit('filter meesages by text', filterMessages.filterData, 1);
+        break;
       case 'filterByDate':
-        if (page < 1) {
-          chatMessagesDefaultValue();
-          socket.emit('filter meesages by date', filterMessages.filterData, page);
-          break;
-        }
-        else {
-          socket.emit('filter meesages by date', filterMessages.filterData, page);
-          break
-        }
+        chatMessagesDefaultValue();
+        socket.emit('filter meesages by date', filterMessages.filterData, 1);
+        break;
     }
 
-  }, [filterMessages]);
+  }, [filterMessages])
 
   useEffect(() => {
     if (messagesRef.current) {
