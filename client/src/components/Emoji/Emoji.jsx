@@ -14,16 +14,16 @@ const Emoji = ({ setMessage }) => {
     setIsOpen(prev => !prev);
   }
 
-  const onEmojiClick = (event, emojiObject) => {
+  const onEmojiClick = (emojiObject, event) => {
     emojiObject.emoji ? setMessage(prev => prev + emojiObject.emoji) : null
   };
   const emojiShow = isOpen ? <Picker onEmojiClick={onEmojiClick} /> : null
-  const iconToggel = isOpen ? '❌' : '🙂';
+  const iconToggle = isOpen ? '❌' : '🙂';
 
   return (
     <>
       <button onClick={handelClick} className={style()}>
-        <span role="img" className={style("icon")}>{iconToggel}</span>
+        <span role="img" className={style("icon")}>{iconToggle}</span>
       </button>
       {emojiShow}
     </>
