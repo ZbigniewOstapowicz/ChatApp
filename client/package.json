@@ -1,7 +1,7 @@
 {
-  "name": "udemy-react-project",
+  "name": "chat-client-project",
   "version": "1.0.0",
-  "description": "kurs udemy z backendem",
+  "description": "chat using react client side",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode=development",
