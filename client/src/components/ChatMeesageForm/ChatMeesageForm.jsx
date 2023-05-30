@@ -37,8 +37,8 @@ const ChatMeesageForm = ({ currentUser, filterMessages, setFilterMessages }) => 
   return (
     <section className={style()}>
       <Settings
-         filterMessages={filterMessages}
-         setFilterMessages={setFilterMessages}
+        filterMessages={filterMessages}
+        setFilterMessages={setFilterMessages}
       />
       <form className={style('form')} onSubmit={handelSendMessage}>
         <input type="text" value={message} onChange={handelOnChangeMessage} className={style('form-input')} />
