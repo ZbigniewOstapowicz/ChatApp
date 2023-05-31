@@ -1,49 +1,49 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 
-import socket from '../../../helpers/socketConfig';
 import bemCssModule from 'bem-css-modules';
 import settingsPanelStyle from './settingsPanel.module.scss';
 const style = bemCssModule(settingsPanelStyle);
 
 const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
-  const [filterByName, setFilterByName] = useState('');
-  const [filterByMeesages, setFilterByMeesages] = useState('');
-  const [filterByDateFrom, setFilterByDateFrom] = useState('');
-  const [filterByDateTo, setFilterByDateTo] = useState('');
+
+  const filterByNameRef = useRef();
+  const filterByMessagesRef = useRef();
+  const filterByDateFromRef = useRef();
+  const filterByDateToRef = useRef();
 
   const handelClickFindName = (e) => {
     e.preventDefault();
-    if (filterByName) {
-      setFilterMessages({ filterBy: 'filterByName', filterData: filterByName })
+    if (filterByNameRef.current.value) {
+      setFilterMessages({ filterBy: 'filterByName', filterData: filterByNameRef.current.value })
     }
   };
-  const handelClickFindMeesages = (e) => {
+  const handelClickFindMessages = (e) => {
     e.preventDefault();
-    if (filterByMeesages) {
-      setFilterMessages({ filterBy: 'filterByText', filterData: filterByMeesages })
+    if (filterByMessagesRef.current.value) {
+      setFilterMessages({ filterBy: 'filterByText', filterData: filterByMessagesRef.current.value })
     }
   };
   const handelClickFindDate = (e) => {
     e.preventDefault();
-    if (filterByDateFrom && filterByDateTo) {
+    if (filterByDateFromRef.current.value && filterByDateToRef.current.value) {
       const date = {
-        from: new Date(filterByDateFrom + ' 00:00:00').toISOString(),
-        to: new Date(filterByDateTo + ' 23:59:59').toISOString(),
+        from: new Date(filterByDateFromRef.current.value + ' 00:00:00').toISOString(),
+        to: new Date(filterByDateToRef.current.value + ' 23:59:59').toISOString(),
       };
       setFilterMessages({ filterBy: 'filterByDate', filterData: date })
 
     }
-    else if (filterByDateFrom) {
+    else if (filterByDateFromRef.current.value) {
       const date = {
-        from: new Date(filterByDateFrom + ' 00:00:00').toISOString(),
+        from: new Date(filterByDateFromRef.current.value + ' 00:00:00').toISOString(),
         to: '',
       }
       setFilterMessages({ filterBy: 'filterByDate', filterData: date })
     }
-    else if (filterByDateTo) {
+    else if (filterByDateToRef.current.value) {
       const date = {
         from: '',
-        to: new Date(filterByDateTo + ' 23:59:59').toISOString()
+        to: new Date(filterByDateToRef.current.value + ' 23:59:59').toISOString()
       }
       setFilterMessages({ filterBy: 'filterByDate', filterData: date })
     }
@@ -52,24 +52,24 @@ const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
   const handelClickReset = (e) => {
     e.preventDefault();
     if (filterMessages.filterBy && filterMessages.filterData) {
-      setFilterByName('');
-      setFilterByMeesages('');
-      setFilterByDateFrom('');
-      setFilterByDateTo('');
+      filterByNameRef.current.value = '';
+      filterByMessagesRef.current.value = '';
+      filterByDateFromRef.current.value = '';
+      filterByDateToRef.current.value = '';
       setFilterMessages({ filterBy: 'reset', filterData: null })
     }
   };
 
   return (
     <aside className={style()}>
-      <form className={style('form')}>
+      <form className={style('form')} >
         <div>
           <label htmlFor="findByName" className={style('form-label')}>find by user name:</label>
           <input type="text"
             id="findByName"
             className={style('form-input')}
-            onChange={(e) => setFilterByName(e.target.value)}
-            value={filterByName} />
+            ref={filterByNameRef}
+          />
           <button onClick={handelClickFindName} className={style('form-button')}>search</button>
         </div>
         <div>
@@ -77,10 +77,9 @@ const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
           <input type="text"
             id="findByText"
             className={style('form-input')}
-            onChange={(e) => setFilterByMeesages(e.target.value)}
-            value={filterByMeesages}
+            ref={filterByMessagesRef}
           />
-          <button onClick={handelClickFindMeesages} className={style('form-button')}>search</button>
+          <button onClick={handelClickFindMessages} className={style('form-button')}>search</button>
         </div>
         <label className={style('form-label')} >find by date:</label>
         <div >
@@ -88,15 +87,13 @@ const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
           <input id="findByDateFrom"
             className={style('form-input')}
             type="date"
-            onChange={(e) => setFilterByDateFrom(e.target.value)}
-            value={filterByDateFrom}
+            ref={filterByDateFromRef}
           />
           <label htmlFor="findByDateTo">To:</label>
           <input id="findByDateTo"
             className={style('form-input')}
             type="date"
-            onChange={(e) => setFilterByDateTo(e.target.value)}
-            value={filterByDateTo}
+            ref={filterByDateToRef}
           />
         </div>
         <button onClick={handelClickFindDate} className={style('form-button')}>Search</button>
