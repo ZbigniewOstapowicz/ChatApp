@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import useGetMessages from "../../hooks/useGetMessages";
 
 import bemCssModule from "bem-css-modules";
-import sound from "../../../audio/messageSound.ogg";
+import sound from '../../../audio/messageSound.ogg';
 import socket from "../../helpers/socketConfig";
 import ChatMeesageForm from "../ChatMeesageForm/ChatMeesageForm";
 
@@ -59,19 +59,18 @@ const MeesagesList = ({ currentUser }) => {
     const dateFetch = new Date(timeStamp);
     const dateNow = new Date(Date.now());
 
-    const comperDate =
+    const compereDate =
       dateNow.getFullYear() + dateNow.getMonth() + dateNow.getDate() ===
-      dateFetch.getFullYear() + dateFetch.getMonth() + dateFetch.getDate() ? (
+        dateFetch.getFullYear() + dateFetch.getMonth() + dateFetch.getDate() ? (
         <p
           className={style("timeStamp")}
         >{`${dateFetch.getHours()}:${dateFetch.getMinutes()}:${dateFetch.getSeconds()}`}</p>
       ) : (
-        <p className={style("timeStamp")}>{`${dateFetch.getDate()}-${
-          dateFetch.getMonth() + 1
-        }-${dateFetch.getFullYear()} ${dateFetch.getHours()}:${dateFetch.getMinutes()}:${dateFetch.getSeconds()}`}</p>
+        <p className={style("timeStamp")}>{`${dateFetch.getDate()}-${dateFetch.getMonth() + 1
+          }-${dateFetch.getFullYear()} ${dateFetch.getHours()}:${dateFetch.getMinutes()}:${dateFetch.getSeconds()}`}</p>
       );
 
-    return comperDate;
+    return compereDate;
   };
 
   const listElement = chatMessages.map((item) =>

@@ -6,7 +6,7 @@ import bemCssModule from 'bem-css-modules';
 import SettingsStyle from './SettingsStyle.module.scss';
 const style = bemCssModule(SettingsStyle);
 
-const Settings = ({filterMessages, setFilterMessages}) => {
+const Settings = ({ filterMessages, setFilterMessages }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
@@ -21,12 +21,12 @@ const Settings = ({filterMessages, setFilterMessages}) => {
     filterMessages={filterMessages}
     setFilterMessages={setFilterMessages}
   /> : null
-  const iconToggel = isOpen ? '❌' : '⚙️';
+  const iconToggle = isOpen ? '❌' : '⚙️';
 
   return (
     <>
       <button onClick={handelClick} className={style()}>
-        <span role="img" className={style("icon")}>{iconToggel}</span>
+        <span role="img" className={style("icon")}>{iconToggle}</span>
       </button>
       {panelShow}
     </>
