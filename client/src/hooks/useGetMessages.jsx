@@ -5,7 +5,17 @@ const useGetMessages = (messagesRef) => {
   const [chatMessages, setChatMessages] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [filterMessages, setFilterMessages] = useState({ filterData: {} });
+  const [filterMessages, setFilterMessages] = useState({
+    isFilter: false,
+    data: {
+      chatUser: "",
+      message: "",
+      date: {
+        from: "",
+        to: "",
+      },
+    },
+  });
 
   useEffect(() => {
     socket.emit("get messages list", page);
@@ -22,29 +32,38 @@ const useGetMessages = (messagesRef) => {
   }, []);
 
   useEffect(() => {
-    if (page > 1 && filterMessages.filterData === {}) {
+    if (page > 1 && !filterMessages.isFilter) {
       setIsLoading(true);
       socket.emit("get messages list", page);
-    }
-    else if (page > 1 && filterMessages.filterData) {
+    } else if (page > 1 && filterMessages.isFilter) {
       if (chatMessages.length < 20) return;
       else {
         setIsLoading(true);
-        socket.emit("filter messages", filterMessages.filterData, page);
+        socket.emit("filter messages", filterMessages.data, page);
       }
     }
   }, [page]);
 
   useEffect(() => {
-    if (filterMessages.filterData) {
+    if (filterMessages.isFilter) {
       chatMessagesDefaultValue();
-      socket.emit("filter messages", filterMessages.filterData, 1);
+      socket.emit("filter messages", filterMessages.data, 1);
     } else {
-      setFilterMessages({ filterData: {} });
+      setFilterMessages({
+        isFilter: false,
+        data: {
+          chatUser: "",
+          message: "",
+          date: {
+            from: "",
+            to: "",
+          },
+        },
+      });
       chatMessagesDefaultValue();
       socket.emit("get messages list", 1);
     }
-  }, [filterMessages]);
+  }, [filterMessages.isFilter]);
 
   const chatMessagesDefaultValue = () => {
     setChatMessages([]);
