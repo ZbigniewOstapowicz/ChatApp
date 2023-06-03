@@ -9,7 +9,6 @@ import bemCssModule from 'bem-css-modules';
 import { default as ChatMeesageFormStyle } from './ChatMeesageFormStyle.module.scss';
 const style = bemCssModule(ChatMeesageFormStyle);
 
-
 const ChatMeesageForm = ({ currentUser, filterMessages, setFilterMessages }) => {
 
   const [message, setMessage] = useState('');
@@ -23,7 +22,7 @@ const ChatMeesageForm = ({ currentUser, filterMessages, setFilterMessages }) => 
     e.preventDefault();
     if (message.trim()) {
       let msgObj = {
-        _id: Math.round(Math.random() * 100000000),
+        _id: Math.round(Math.random() * 10000000000),
         user: currentUser,
         msg: message,
         timeStamp: new Date().toISOString()

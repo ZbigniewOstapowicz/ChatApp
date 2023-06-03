@@ -87,14 +87,12 @@ const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
 
   const handelClickReset = (e) => {
     e.preventDefault();
-    if (filterMessages.filterData) {
+    if (filterMessages.isFilter) {
       filterByNameRef.current.value = "";
       filterByMessagesRef.current.value = "";
       filterByDateFromRef.current.value = "";
       filterByDateToRef.current.value = "";
-      setFilterMessages({
-        filterData: { name: "", message: "", date: { from: "", to: "" } },
-      });
+      setFilterMessages({ isFilter: false, chatUser: "", message: "", date: { from: "", to: "" } },);
     }
   };
 

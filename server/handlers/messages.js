@@ -116,24 +116,74 @@ exports.getAllMessages = async (page, socket) => {
 
 exports.getFilterMessages = async (data, page, socket) => {
   try {
-    console.log(data);
-    const { msg, userName, date } = data
-    await db.find(
-      {
-        'msg': { $regex: new RegExp(msg, 'i') },
-        'user.name': { $regex: new RegExp(userName, 'i') },
-        'timeStamp': {
-          $gte: new Date(date.from).toISOString(),
-          $lt: new Date(date.to).toISOString()
-        }
-      }
-    )
-      .sort({ timeStamp: -1 })
-      .skip((page - 1) * PAGE_SIZE)
-      .limit(PAGE_SIZE)
-      .exec()
+    console.log(data, page);
+    const { chatUser, message, date } = data
 
-    io.to(socket).emit('get filter messages', result.reverse());
+    if (date.from && date.to) {
+      const result = await db.find(
+        {
+          'msg': { $regex: new RegExp(message, 'i') },
+          'user.name': { $regex: new RegExp(chatUser, 'i') },
+          'timeStamp': {
+            $gte: new Date(date.from).toISOString(),
+            $lt: new Date(date.to).toISOString()
+          }
+        }
+      )
+        .sort({ timeStamp: -1 })
+        .skip((page - 1) * PAGE_SIZE)
+        .limit(PAGE_SIZE)
+        .exec()
+      io.to(socket).emit('get all messages', result.reverse());
+      console.log(result)
+    }
+    else if (date.from && !date.to) {
+      const result = await db.find(
+        {
+          'msg': { $regex: new RegExp(message, 'i') },
+          'user.name': { $regex: new RegExp(chatUser, 'i') },
+          'timeStamp': {
+            $gte: new Date(date.from).toISOString(),
+          }
+        }
+      )
+        .sort({ timeStamp: -1 })
+        .skip((page - 1) * PAGE_SIZE)
+        .limit(PAGE_SIZE)
+        .exec()
+      io.to(socket).emit('get all messages', result.reverse());
+    }
+    else if (date.to && !date.from) {
+      const result = await db.find(
+        {
+          'msg': { $regex: new RegExp(message, 'i') },
+          'user.name': { $regex: new RegExp(chatUser, 'i') },
+          'timeStamp': {
+            $lt: new Date(date.to).toISOString()
+          }
+        }
+      )
+        .sort({ timeStamp: -1 })
+        .skip((page - 1) * PAGE_SIZE)
+        .limit(PAGE_SIZE)
+        .exec()
+      io.to(socket).emit('get all messages', result.reverse());
+    }
+    else if (!date.from && !date.to) {
+      const result = await db.find(
+        {
+          'msg': { $regex: new RegExp(message, 'i') },
+          'user.name': { $regex: new RegExp(chatUser, 'i') },
+        }
+      )
+        .sort({ timeStamp: -1 })
+        .skip((page - 1) * PAGE_SIZE)
+        .limit(PAGE_SIZE)
+        .exec()
+      io.to(socket).emit('get all messages', result.reverse());
+      console.log(result)
+    }
+
   }
 
 
