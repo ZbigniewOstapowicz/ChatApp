@@ -10,18 +10,6 @@ const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
   const filterByDateFromRef = useRef();
   const filterByDateToRef = useRef();
 
-  // const handelClickFindName = (e) => {
-  //   e.preventDefault();
-  //   if (filterByNameRef.current.value) {
-  //     setFilterMessages({ filterBy: 'filterByName', filterData: filterByNameRef.current.value })
-  //   }
-  // };
-  // const handelClickFindMessages = (e) => {
-  //   e.preventDefault();
-  //   if (filterByMessagesRef.current.value) {
-  //     setFilterMessages({ filterBy: 'filterByText', filterData: filterByMessagesRef.current.value })
-  //   }
-  // };
   const handelClickFindDate = (e) => {
     e.preventDefault();
     const filterData = {
@@ -109,7 +97,6 @@ const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
             className={style("form-input")}
             ref={filterByNameRef}
           />
-          {/* <button onClick={handelClickFindName} className={style('form-button')}>search</button> */}
         </div>
         <div>
           <label htmlFor="findByText" className={style("form-label")}>
@@ -121,7 +108,6 @@ const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
             className={style("form-input")}
             ref={filterByMessagesRef}
           />
-          {/* <button onClick={handelClickFindMessages} className={style('form-button')}>search</button> */}
         </div>
         <label className={style("form-label")}>find by date:</label>
         <div>
@@ -140,12 +126,13 @@ const SettingsPanel = ({ filterMessages, setFilterMessages }) => {
             ref={filterByDateToRef}
           />
         </div>
-        <button onClick={handelClickFindDate} className={style("form-button")}>
+        <button onClick={handelClickFindDate} className={style("form-button")} type="submit">
           Search
         </button>
         <button
           onClick={handelClickReset}
           className={style("form-button--reset")}
+          type="button"
         >
           Reset
         </button>
